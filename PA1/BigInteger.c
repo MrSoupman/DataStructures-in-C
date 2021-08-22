@@ -24,6 +24,11 @@ void FreeNode(DigitNode* node)
 
 	}
 }
+void FreeBigInteger(BigInteger* big)
+{
+	FreeNode(big->front);
+	free(big);
+}
 
 //Frees any allocated memory, exits program with exit_failure
 int ThrowException(BigInteger* big)
@@ -86,7 +91,64 @@ BigInteger* parse(char* integer)
 }
 
 
-char* toString(BigInteger* big) //borked lol
+BigInteger* add(BigInteger *first, BigInteger *second)
+{
+	int len;
+	//Need to get the longest digit length
+	if(first->numDigits > second->numDigits)
+		len = first->numDigits;
+	else
+		len = second->numDigits;
+
+	char* temp = malloc(len + 2);
+	int i;
+	DigitNode *ptr1 = first->front, *ptr2 = second->front;
+	short digit, carry= 0;
+	while(ptr1 != NULL && ptr2 != NULL)
+	{
+		digit = ptr1->digit + ptr2->digit;
+		if(carry)
+		{
+			digit++;
+			carry = 0;
+		}
+		if(digit > 9)
+		{
+			carry = 1;
+			digit %= 10;
+		}
+		char c = (digit) + '0';
+		strncat(temp, &c, 1);
+		ptr1 = ptr1->next;
+		ptr2 = ptr2->next;
+	}
+
+	//Appends remaining digits
+	char c;
+	if(ptr1 != NULL)
+	{
+		while(ptr1 != NULL)
+		{
+			c = (ptr1->digit) + '0';
+			strncat(temp, &c, 1);
+			ptr1 = ptr1->next;
+		}
+	}
+	else if(ptr2 != NULL)
+	{
+		while(ptr2 != NULL)
+		{
+			c = (ptr2->digit) + '0';
+			strncat(temp,&c , 1);
+			ptr2 = ptr2->next;
+		}
+	}
+	BigInteger* ans = parse(temp);
+	free(temp);
+	return ans;
+}
+
+char* toString(BigInteger* big)
 {
 	int count = big->numDigits + 2; //we add 2, one for possible negative sign, another for null terminal
 	char* temp = malloc(count);

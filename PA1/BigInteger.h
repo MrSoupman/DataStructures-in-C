@@ -16,6 +16,7 @@ typedef struct BigInteger
 }BigInteger;
 
 BigInteger* parse(char* integer);
+BigInteger* add(BigInteger* first, BigInteger* second);
 char* toString(BigInteger* big);
-
+void FreeBigInteger(BigInteger* big);
 #endif
