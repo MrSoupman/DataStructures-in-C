@@ -19,5 +19,5 @@ int main(int argc, char** argv)
 	else
 		printf("No\n");
 	printf("%s : %d\n","Number of digits",biggie->numDigits);
-	return 0;
+	return EXIT_SUCCESS;
 }

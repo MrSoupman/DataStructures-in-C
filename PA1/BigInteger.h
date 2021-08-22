@@ -1,5 +1,6 @@
 #ifndef BIGINT_H
 #define BIGINT_H
+#include <stdlib.h>
 typedef struct DigitNode
 {
 	short digit;

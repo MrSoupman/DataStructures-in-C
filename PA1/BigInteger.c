@@ -25,20 +25,11 @@ void FreeNode(DigitNode* node)
 	}
 }
 
-//Frees any allocated memory, returns an 'empty' big integer as a way to prevent malformed inputs
-BigInteger* ThrowException(BigInteger* big)
+//Frees any allocated memory, exits program with exit_failure
+int ThrowException(BigInteger* big)
 {
-	big->negative = 1;
 	FreeNode(big->front);
-	big->front = NULL;
-	big->numDigits = 0;
-	return big;
-}
-
-//Since C does not have exceptions, whenever we throw an exception, the biginteger will be empty, and have its negative flag set
-int isValid(BigInteger* biggie)
-{
-	return biggie->front == NULL && biggie->negative == 1;
+	exit(EXIT_FAILURE);
 }
 
 BigInteger* parse(char* integer)
@@ -64,7 +55,8 @@ BigInteger* parse(char* integer)
 			if(isTrail) //Space in middle, malformed input
 			{
 				//Returns our version of an exception
-				return ThrowException(big);
+				fprintf(stderr, "Malformed input, exitting...");
+				ThrowException(big);
 			}
 			int num = c -'0';
 			if(num == 0 && big->front == NULL) //checking for leading zeroes
@@ -77,7 +69,10 @@ BigInteger* parse(char* integer)
 		else if(isspace(c))
 			isTrail = 1;
 		else
-			return ThrowException(big);
+		{
+			fprintf(stderr, "Malformed input, exitting...");
+			ThrowException(big);
+		}
 	}
 
 	//At the end, check if input was just a zero or something
