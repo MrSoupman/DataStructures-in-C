@@ -101,6 +101,7 @@ BigInteger* add(BigInteger *first, BigInteger *second)
 		len = second->numDigits;
 
 	char* temp = malloc(len + 2);
+	memset(temp,'\0',sizeof(temp));
 	int i;
 	DigitNode *ptr1 = first->front, *ptr2 = second->front;
 	short digit, carry= 0;
