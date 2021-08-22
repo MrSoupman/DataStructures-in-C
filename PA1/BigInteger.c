@@ -89,3 +89,34 @@ BigInteger* parse(char* integer)
 	}
 	return big;
 }
+
+
+char* toString(BigInteger* big) //borked lol
+{
+	int count = big->numDigits + 2; //we add 2, one for possible negative sign, another for null terminal
+	char* temp = malloc(count);
+	memset(temp,'\0',sizeof(temp));
+	DigitNode *ptr = big->front;
+
+	//Store the reversed big Integer into temp
+	while(ptr != NULL)
+	{
+		char c = (ptr->digit) + '0';
+		strncat(temp,&c,1);
+		ptr = ptr->next;
+	}
+	char* str = malloc(count);
+	memset(str,'\0',sizeof(str));
+	int i;
+	if(big->negative)
+		strncat(str, "-", 2);
+
+	//Reverse the string
+	for(i = count-1; i >= 0; i--) //-1 because of null terminal
+	{
+		char c = temp[i];
+		strncat(str,&c,1);
+	}
+	free(temp);
+	return str;
+}

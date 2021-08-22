@@ -11,11 +11,8 @@ int main(int argc, char** argv)
 	DigitNode *ptr = biggie->front;
 
 	printf("%s\n","Parse test");
-	while(ptr != NULL)
-	{
-		printf("%d",ptr->digit);
-		ptr = ptr->next;
-	}
+	char* test = toString(biggie);
+	printf("%s",test);
 	printf("\n%s","Negative: ");
 	if(biggie->negative)
 		printf("Yes\n");

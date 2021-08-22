@@ -2,7 +2,7 @@
 #define BIGINT_H
 typedef struct DigitNode
 {
-	int digit;
+	short digit;
 	struct DigitNode *next;
 
 }DigitNode;
@@ -15,5 +15,6 @@ typedef struct BigInteger
 }BigInteger;
 
 BigInteger* parse(char* integer);
+char* toString(BigInteger* big);
 
 #endif
